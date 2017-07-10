@@ -205,7 +205,7 @@ class StrictQueryParamMixin(object):
         serializer_fields = self._get_fields_from_serializer_class()
         valid_fields = list(set(model_fields).intersection(set(serializer_fields)))
         valid_fields += self.queryset.query.aggregates.keys()
-        tmp_list = [param.strip().lstrip('-') for param in ordering_keys.split(',')]
+        tmp_list = [param.strip().lstrip('-').split("__")[0] for param in ordering_keys.split(',')]
         invalid_fields = set(tmp_list) - set(valid_fields)
         if invalid_fields:
             raise FieldError('Unknown query key: %s not in fields: %s' %
